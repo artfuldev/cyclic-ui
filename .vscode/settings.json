@@ -8,6 +8,7 @@
         "dist": true,
         "**/*.js": { "when": "$(basename).ts"},
         "**/*.js.map": true,
-        ".vscode": true
+        ".vscode": true,
+        "typings": true
     }
 }
