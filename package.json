@@ -1,6 +1,6 @@
 {
   "name": "cyclic-ui",
-  "version": "0.0.1-alpha.1",
+  "version": "0.0.1-alpha.5",
   "description": "A set of skinnable UI components for Cycle.js apps",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -27,7 +27,10 @@
   },
   "homepage": "https://github.com/artfuldev/cyclic-ui",
   "dependencies": {
-    "xstream": "^5.1.0"
+    "@cycle/base": "^4.1.1",
+    "@cycle/dom": "^11.0.1",
+    "@cycle/isolate": "^1.4.0",
+    "xstream": "^5.3.6"
   },
   "devDependencies": {
     "typescript": "^1.8.10",
