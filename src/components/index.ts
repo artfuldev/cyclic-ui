@@ -9,8 +9,8 @@ export interface UIComponent {
 
 export interface UIComponentSources {
   dom: DOMSource;
-  style$: Stream<Style>;
-  classes$: Stream<string>;
+  style$?: Stream<Style>;
+  classes$?: Stream<string>;
 }
 
 export interface UIComponentSinks {
