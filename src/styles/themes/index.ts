@@ -1,3 +1,5 @@
+import theme from './light';
+
 export interface Palette {
     primary1Color: string,
     primary2Color: string,
@@ -20,3 +22,5 @@ export interface Theme {
   fontFamily: string;
   palette: Palette;
 }
+
+export const defaultTheme = theme;
