@@ -12,3 +12,5 @@ export function themeify(style: Style, theme: Theme): Style {
   }
   return style;
 }
+
+export default themeify;
