@@ -1,12 +1,12 @@
-import { UIComponent, UIComponentSources, UIComponentSinks } from './';
+import { UIComponent, UIComponentSources, UIComponentSinks } from '../';
 import xs, { Stream } from 'xstream';
 import { DOMSource } from '@cycle/dom/xstream-typings';
 import { VNode, button } from '@cycle/dom';
 import isolate from '@cycle/isolate';
-import { shallowExtendNew } from '../utils/extend';
-import { themeify } from '../utils/themeify';
-import { Style } from '../styles';
-import { Theme, defaultTheme } from '../styles/themes';
+import { shallowExtendNew } from '../../utils/extend';
+import { themeify } from '../../utils/themeify';
+import { Style } from '../../styles';
+import { Theme, defaultTheme } from '../../styles/themes';
 
 export interface ButtonSources extends UIComponentSources {
   content$: Stream<VNode[] | string>;
