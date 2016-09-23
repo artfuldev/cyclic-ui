@@ -4,10 +4,11 @@ export function shallowCopy(target: Object, source: Object) {
         target[key] = source[key];
 }
 
-export function shallowExtend(target: Object, ...sources: Object[]) {
+export function shallowExtend(target: Object, ...sources: Object[]): Object {
   sources.forEach(source => shallowCopy(target, source));
+  return target;
 }
 
-export function shallowExtendNew(target: Object, ...sources: Object[]) {
+export function shallowExtendNew(target: Object, ...sources: Object[]): Object {
   return shallowExtend({}, target, sources);
 }
