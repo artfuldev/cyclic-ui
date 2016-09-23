@@ -1,13 +1,18 @@
 import { Stream } from 'xstream';
+import { DOMSource } from '@cycle/dom/xstream-typings';
+import { VNode } from '@cycle/dom';
+import { Style } from './../styles';
 
-export interface Component {
-  (sources: Sources): Sinks
+export interface UIComponent {
+  (sources: UIComponentSources): UIComponentSinks;
 }
 
-export interface Sources {
-  [name: string]: Stream<any> | (() => Stream<any>) 
+export interface UIComponentSources {
+  dom: DOMSource;
+  style$: Stream<Style>;
+  classes$: Stream<string>;
 }
 
-export interface Sinks {
-  [name: string]: Stream<any> | (() => Stream<any>)
+export interface UIComponentSinks {
+  dom: Stream<VNode>;
 } 
