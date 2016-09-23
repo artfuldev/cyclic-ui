@@ -4,11 +4,12 @@ import { DOMSource } from '@cycle/dom/xstream-typings';
 import { VNode, button } from '@cycle/dom';
 import isolate from '@cycle/isolate';
 import { shallowExtendNew } from '../utils/extend';
+import { themeify } from '../utils/themeify';
 import { Style } from '../styles';
 import { Theme, defaultTheme } from '../styles/themes';
 
 export interface ButtonSources extends UIComponentSources {
-  content$: Stream<VNode[]|string>;
+  content$: Stream<VNode[] | string>;
 }
 
 export interface ButtonSinks extends UIComponentSinks {
@@ -28,11 +29,15 @@ function ButtonComponent(sources: ButtonSources): ButtonSinks {
     sources.theme$ == undefined
       ? xs.of(defaultTheme)
       : sources.theme$.map(theme => shallowExtendNew(defaultTheme, theme) as Theme);
-  const style$ = 
-    sources.style$ == undefined
-      ? xs.of(buttonStyle)
-      : sources.style$.map(style => shallowExtendNew(buttonStyle, style) as Style);
-  const classes$ = 
+  const style$ =
+    theme$.map(theme =>
+      (sources.style$ == undefined
+        ? xs.of(buttonStyle)
+        : sources.style$
+          .map(style => shallowExtendNew(buttonStyle, style) as Style)
+      ).map(style => themeify(style, theme))
+    ).flatten();
+  const classes$ =
     sources.classes$ == undefined
       ? xs.of(buttonClasses)
       : sources.classes$;
