@@ -1,16 +1,14 @@
+import { UIComponent, UIComponentSources, UIComponentSinks } from './';
 import xs, { Stream } from 'xstream';
 import { DOMSource } from '@cycle/dom/xstream-typings';
 import { VNode, button } from '@cycle/dom';
 import isolate from '@cycle/isolate';
 
-export interface ButtonSources {
-  selector$: Stream<string>;
+export interface ButtonSources extends UIComponentSources {
   content$: Stream<VNode[]|string>;
-  dom: DOMSource;
 }
 
-export interface ButtonSinks {
-  dom: Stream<VNode>;
+export interface ButtonSinks extends UIComponentSinks {
   click$: Stream<MouseEvent>;
 }
 
@@ -20,11 +18,9 @@ function ButtonComponent(sources: ButtonSources): ButtonSinks {
       .select('button')
       .events('click')
       .map(event => event as MouseEvent);
-  const selector$ = sources.selector$;
-  const content$ = sources.content$;
   const dom =
-    xs.combine(selector$, content$)
-      .map(([selector, content]) => button(selector, content));
+    xs.combine(sources.classes$, sources.style$, sources.content$)
+      .map(([classes, style, content]) => button(classes, { style }, content));
   return {
     dom,
     click$
