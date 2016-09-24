@@ -31,20 +31,22 @@ function FontIconComponent(sources: FontIconSources): FontIconSinks {
         .events('mouseenter')
         .mapTo(true)
     ).startWith(false);
-  const theme$ = take(sources.theme$, xs.of(defaultTheme));
-  const localColor$ =
+  const theme$ =
+    take(sources.theme$, xs.of(defaultTheme))
+    .remember();
+  const color$ =
     theme$.map(theme =>
       take(sources.color$, xs.of(theme.palette.textColor))
     ).flatten();
   const hoverColor$ =
-    take(sources.hoverColor$, localColor$);
+    take(sources.hoverColor$, color$);
   const colorStyle$ =
     hover$.map(hover =>
       hover
         ? hoverColor$
-        : localColor$
+        : color$
     ).flatten()
-    .map(color => ({ color } as Style));
+    .map<Style>(color => ({ color }));
   const style$ =
     colorStyle$.map(colorStyle =>
       theme$.map(theme =>
