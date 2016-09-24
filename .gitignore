@@ -49,3 +49,5 @@ dist
 *.d.ts
 *.js
 *.js.map
+
+*.tgz
