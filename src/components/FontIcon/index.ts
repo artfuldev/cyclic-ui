@@ -1,7 +1,7 @@
 import { UIComponent, UIComponentSources, UIComponentSinks } from '../';
 import xs, { Stream } from 'xstream';
 import { DOMSource } from '@cycle/dom/xstream-typings';
-import { VNode, button } from '@cycle/dom';
+import { VNode, span } from '@cycle/dom';
 import isolate from '@cycle/isolate';
 import { shallowExtendNew } from '../../utils/extend';
 import { themeify } from '../../utils/themeify';
@@ -40,31 +40,39 @@ function FontIconComponent(sources: FontIconSources): FontIconSinks {
         ? xs.of(theme.palette.textColor)
         : sources.color$
     ).flatten();
+  const hoverColor$ =
+    sources.hoverColor$ == undefined
+      ? localColor$
+      : sources.hoverColor$;
   const color$ =
     hover$.map(hover =>
       hover
-        ? color$
-        : color$
-    ).flatten();
+        ? hoverColor$
+        : localColor$
+    ).flatten()
+    .map(color => ({ color } as Style));
   const style$ =
-    theme$.map(theme =>
-      (sources.style$ == undefined
-        ? xs.of(fontIconStyle)
-        : sources.style$
-          .map(style => shallowExtendNew(fontIconStyle, style) as Style)
-      ).map(style => themeify(style, theme))
+    color$.map(color =>
+      theme$.map(theme =>
+        (sources.style$ == undefined
+          ? xs.of(fontIconStyle)
+          : sources.style$
+            .map(style => shallowExtendNew(fontIconStyle, style) as Style)
+        ).map(style => themeify(style, theme))
+      ).flatten()
+      .map(style => shallowExtendNew(style, color) as Style)
     ).flatten();
   const classes$ =
     sources.classes$ == undefined
       ? xs.of(fontIconClasses)
       : sources.classes$;
   const dom =
-    xs.combine(classes$, style$, sources.color$, hover$)
-      .map(([classes, style, color, hover]) => button(classes, { style }, content));
+    xs.combine(classes$, style$)
+      .map(([classes, style]) => span(classes, { style }));
   return {
     dom
   };
 }
 
-export const Button = (sources: ButtonSources) => isolate(ButtonComponent)(sources);
-export default Button;
+export const FontIcon = (sources: FontIconSources) => isolate(FontIconComponent)(sources);
+export default FontIcon;
