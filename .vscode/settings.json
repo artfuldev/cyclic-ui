@@ -12,6 +12,7 @@
         "typings": true,
         "components": true,
         "styles": true,
-        "utils": true
+        "utils": true,
+        "*.tgz": true
     }
 }
