@@ -12,3 +12,7 @@ export function shallowExtend(target: Object, ...sources: Object[]): Object {
 export function shallowExtendNew(target: Object, ...sources: Object[]): Object {
   return shallowExtend({}, target, sources);
 }
+
+export function merge<T>(target: T, ...sources: T[]): T {
+  return shallowExtendNew(target, sources) as T;
+}
