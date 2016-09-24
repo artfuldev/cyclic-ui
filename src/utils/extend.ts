@@ -1,3 +1,5 @@
+import { Stream } from 'xstream';
+
 export function shallowCopy(target: Object, source: Object) {
   for (var key in source)
       if (source.hasOwnProperty(key))
@@ -15,4 +17,10 @@ export function shallowExtendNew(target: Object, ...sources: Object[]): Object {
 
 export function merge<T>(target: T, ...sources: T[]): T {
   return shallowExtendNew(target, sources) as T;
+}
+
+export function take<T>(main$: Stream<T>, default$: Stream<T>): Stream<T> {
+  return main$ == undefined
+      ? default$
+      : main$;
 }
