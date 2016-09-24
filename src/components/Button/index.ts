@@ -3,7 +3,7 @@ import xs, { Stream } from 'xstream';
 import { DOMSource } from '@cycle/dom/xstream-typings';
 import { VNode, button } from '@cycle/dom';
 import isolate from '@cycle/isolate';
-import { shallowExtendNew } from '../../utils/extend';
+import { merge } from '../../utils/extend';
 import { themeify } from '../../utils/themeify';
 import { Style } from '../../styles';
 import { Theme, defaultTheme } from '../../styles/themes';
@@ -28,13 +28,13 @@ function ButtonComponent(sources: ButtonSources): ButtonSinks {
   const theme$ =
     sources.theme$ == undefined
       ? xs.of(defaultTheme)
-      : sources.theme$.map(theme => shallowExtendNew(defaultTheme, theme) as Theme);
+      : sources.theme$.map(theme => merge(defaultTheme, theme));
   const style$ =
     theme$.map(theme =>
       (sources.style$ == undefined
         ? xs.of(buttonStyle)
         : sources.style$
-          .map(style => shallowExtendNew(buttonStyle, style) as Style)
+          .map(style => merge(buttonStyle, style))
       ).map(style => themeify(style, theme))
     ).flatten();
   const classes$ =

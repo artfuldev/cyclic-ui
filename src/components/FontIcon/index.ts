@@ -3,7 +3,7 @@ import { Stream } from 'xstream';
 import { DOMSource } from '@cycle/dom/xstream-typings';
 import { VNode, span } from '@cycle/dom';
 import isolate from '@cycle/isolate';
-import { shallowExtendNew } from '../../utils/extend';
+import { merge } from '../../utils/extend';
 import { themeify } from '../../utils/themeify';
 import { Style } from '../../styles';
 import { Theme, defaultTheme } from '../../styles/themes';
@@ -34,7 +34,7 @@ function FontIconComponent(sources: FontIconSources): FontIconSinks {
   const theme$ =
     sources.theme$ == undefined
       ? Stream.of(defaultTheme)
-      : sources.theme$.map(theme => shallowExtendNew(defaultTheme, theme) as Theme);
+      : sources.theme$.map(theme => merge(defaultTheme, theme));
   const localColor$ =
     theme$.map(theme =>
       sources.color$ == undefined
@@ -45,7 +45,7 @@ function FontIconComponent(sources: FontIconSources): FontIconSinks {
     sources.hoverColor$ == undefined
       ? localColor$
       : sources.hoverColor$;
-  const color$ =
+  const colorStyle$ =
     hover$.map(hover =>
       hover
         ? hoverColor$
@@ -53,15 +53,15 @@ function FontIconComponent(sources: FontIconSources): FontIconSinks {
     ).flatten()
     .map(color => ({ color } as Style));
   const style$ =
-    color$.map(color =>
+    colorStyle$.map(colorStyle =>
       theme$.map(theme =>
         (sources.style$ == undefined
           ? Stream.of(fontIconStyle)
           : sources.style$
-            .map(style => shallowExtendNew(fontIconStyle, style) as Style)
+            .map(style => merge(fontIconStyle, style))
         ).map(style => themeify(style, theme))
       ).flatten()
-      .map(style => shallowExtendNew(style, color) as Style)
+      .map(style => merge(style, colorStyle))
     ).flatten();
   const classes$ =
     sources.classes$ == undefined
