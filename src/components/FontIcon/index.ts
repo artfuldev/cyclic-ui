@@ -1,5 +1,5 @@
 import { UIComponent, UIComponentSources, UIComponentSinks } from '../';
-import { Stream } from 'xstream';
+import xs, { Stream } from 'xstream';
 import { DOMSource } from '@cycle/dom/xstream-typings';
 import { VNode, span } from '@cycle/dom';
 import isolate from '@cycle/isolate';
@@ -21,7 +21,7 @@ const fontIconClasses = '.material-icons';
 
 function FontIconComponent(sources: FontIconSources): FontIconSinks {
   const hover$ =
-    Stream.merge(
+    xs.merge(
       sources.dom
         .select('span')
         .events('mouseenter')
@@ -32,11 +32,11 @@ function FontIconComponent(sources: FontIconSources): FontIconSinks {
         .mapTo(true)
     ).startWith(false);
   const theme$ =
-    take(sources.theme$, Stream.of(defaultTheme))
+    take(sources.theme$, xs.of(defaultTheme))
       .map(theme => merge(defaultTheme, theme));
   const localColor$ =
     theme$.map(theme =>
-      take(sources.color$, Stream.of(theme.palette.textColor))
+      take(sources.color$, xs.of(theme.palette.textColor))
     ).flatten();
   const hoverColor$ =
     take(sources.hoverColor$, localColor$);
@@ -50,16 +50,16 @@ function FontIconComponent(sources: FontIconSources): FontIconSinks {
   const style$ =
     colorStyle$.map(colorStyle =>
       theme$.map(theme =>
-        take(sources.style$, Stream.of(fontIconStyle)
+        take(sources.style$, xs.of(fontIconStyle)
           .map(style => merge(fontIconStyle, style))
         ).map(style => themeify(style, theme))
       ).flatten()
       .map(style => merge(style, colorStyle))
     ).flatten();
   const classes$ =
-    take(sources.classes$, Stream.of(fontIconClasses));
+    take(sources.classes$, xs.of(fontIconClasses));
   const dom =
-    Stream.combine(classes$, style$, sources.icon$)
+    xs.combine(classes$, style$, sources.icon$)
       .map(([classes, style, icon]) => span(classes, { style }, [icon]));
   return {
     dom
