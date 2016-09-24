@@ -10,7 +10,7 @@ import { Theme, defaultTheme } from '../../styles/themes';
 
 export interface FontIconSources extends UIComponentSources {
   color$: Stream<string>;
-  hoverColor$: Stream<string>;
+  hoverColor$?: Stream<string>;
 }
 
 export interface FontIconSinks extends UIComponentSinks { }
