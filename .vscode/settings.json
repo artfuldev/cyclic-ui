@@ -11,6 +11,7 @@
         ".vscode/*BROWSE*": true,
         "typings": true,
         "components": true,
-        "styles": true
+        "styles": true,
+        "utils": true
     }
 }
