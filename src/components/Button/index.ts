@@ -25,9 +25,7 @@ function ButtonComponent(sources: ButtonSources): ButtonSinks {
       .select('button')
       .events('click')
       .map(event => event as MouseEvent);
-  const theme$ =
-    take(sources.theme$, xs.of(defaultTheme))
-      .map(theme => merge(defaultTheme, theme));
+  const theme$ = take(sources.theme$, xs.of(defaultTheme));
   const style$ =
     theme$.map(theme =>
       take(sources.style$, xs.of(buttonStyle))

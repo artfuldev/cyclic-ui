@@ -31,9 +31,7 @@ function FontIconComponent(sources: FontIconSources): FontIconSinks {
         .events('mouseenter')
         .mapTo(true)
     ).startWith(false);
-  const theme$ =
-    take(sources.theme$, xs.of(defaultTheme))
-      .map(theme => merge(defaultTheme, theme));
+  const theme$ = take(sources.theme$, xs.of(defaultTheme));
   const localColor$ =
     theme$.map(theme =>
       take(sources.color$, xs.of(theme.palette.textColor))
