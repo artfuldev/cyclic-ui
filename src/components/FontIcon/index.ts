@@ -3,7 +3,7 @@ import { Stream } from 'xstream';
 import { DOMSource } from '@cycle/dom/xstream-typings';
 import { VNode, span } from '@cycle/dom';
 import isolate from '@cycle/isolate';
-import { merge } from '../../utils/extend';
+import { merge, take } from '../../utils/extend';
 import { themeify } from '../../utils/themeify';
 import { Style } from '../../styles';
 import { Theme, defaultTheme } from '../../styles/themes';
@@ -32,19 +32,14 @@ function FontIconComponent(sources: FontIconSources): FontIconSinks {
         .mapTo(true)
     ).startWith(false);
   const theme$ =
-    sources.theme$ == undefined
-      ? Stream.of(defaultTheme)
-      : sources.theme$.map(theme => merge(defaultTheme, theme));
+    take(sources.theme$, Stream.of(defaultTheme))
+      .map(theme => merge(defaultTheme, theme));
   const localColor$ =
     theme$.map(theme =>
-      sources.color$ == undefined
-        ? Stream.of(theme.palette.textColor)
-        : sources.color$
+      take(sources.color$, Stream.of(theme.palette.textColor))
     ).flatten();
   const hoverColor$ =
-    sources.hoverColor$ == undefined
-      ? localColor$
-      : sources.hoverColor$;
+    take(sources.hoverColor$, localColor$);
   const colorStyle$ =
     hover$.map(hover =>
       hover
@@ -55,18 +50,14 @@ function FontIconComponent(sources: FontIconSources): FontIconSinks {
   const style$ =
     colorStyle$.map(colorStyle =>
       theme$.map(theme =>
-        (sources.style$ == undefined
-          ? Stream.of(fontIconStyle)
-          : sources.style$
-            .map(style => merge(fontIconStyle, style))
+        take(sources.style$, Stream.of(fontIconStyle)
+          .map(style => merge(fontIconStyle, style))
         ).map(style => themeify(style, theme))
       ).flatten()
       .map(style => merge(style, colorStyle))
     ).flatten();
   const classes$ =
-    sources.classes$ == undefined
-      ? Stream.of(fontIconClasses)
-      : sources.classes$;
+    take(sources.classes$, Stream.of(fontIconClasses));
   const dom =
     Stream.combine(classes$, style$, sources.icon$)
       .map(([classes, style, icon]) => span(classes, { style }, [icon]));
