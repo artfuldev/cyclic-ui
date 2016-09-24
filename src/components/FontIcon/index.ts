@@ -10,6 +10,7 @@ import { Theme, defaultTheme } from '../../styles/themes';
 
 export interface FontIconSources extends UIComponentSources {
   color$: Stream<string>;
+  icon$: Stream<string>;
   hoverColor$?: Stream<string>;
 }
 
@@ -67,8 +68,8 @@ function FontIconComponent(sources: FontIconSources): FontIconSinks {
       ? xs.of(fontIconClasses)
       : sources.classes$;
   const dom =
-    xs.combine(classes$, style$)
-      .map(([classes, style]) => span(classes, { style }));
+    xs.combine(classes$, style$, sources.icon$)
+      .map(([classes, style, icon]) => span(classes, { style }, [icon]));
   return {
     dom
   };
