@@ -1,5 +1,5 @@
 import { UIComponent, UIComponentSources, UIComponentSinks } from '../';
-import xs, { Stream } from 'xstream';
+import { Stream } from 'xstream';
 import { DOMSource } from '@cycle/dom/xstream-typings';
 import { VNode, span } from '@cycle/dom';
 import isolate from '@cycle/isolate';
@@ -17,28 +17,28 @@ export interface FontIconSources extends UIComponentSources {
 export interface FontIconSinks extends UIComponentSinks { }
 
 const fontIconStyle: Style = {};
-const fontIconClasses = '';
+const fontIconClasses = '.material-icons';
 
 function FontIconComponent(sources: FontIconSources): FontIconSinks {
   const hover$ =
-    xs.merge(
+    Stream.merge(
       sources.dom
-        .select('button')
+        .select('span')
         .events('mouseenter')
         .mapTo(false),
       sources.dom
-        .select('button')
+        .select('span')
         .events('mouseenter')
         .mapTo(true)
     ).startWith(false);
   const theme$ =
     sources.theme$ == undefined
-      ? xs.of(defaultTheme)
+      ? Stream.of(defaultTheme)
       : sources.theme$.map(theme => shallowExtendNew(defaultTheme, theme) as Theme);
   const localColor$ =
     theme$.map(theme =>
       sources.color$ == undefined
-        ? xs.of(theme.palette.textColor)
+        ? Stream.of(theme.palette.textColor)
         : sources.color$
     ).flatten();
   const hoverColor$ =
@@ -56,7 +56,7 @@ function FontIconComponent(sources: FontIconSources): FontIconSinks {
     color$.map(color =>
       theme$.map(theme =>
         (sources.style$ == undefined
-          ? xs.of(fontIconStyle)
+          ? Stream.of(fontIconStyle)
           : sources.style$
             .map(style => shallowExtendNew(fontIconStyle, style) as Style)
         ).map(style => themeify(style, theme))
@@ -65,10 +65,10 @@ function FontIconComponent(sources: FontIconSources): FontIconSinks {
     ).flatten();
   const classes$ =
     sources.classes$ == undefined
-      ? xs.of(fontIconClasses)
+      ? Stream.of(fontIconClasses)
       : sources.classes$;
   const dom =
-    xs.combine(classes$, style$, sources.icon$)
+    Stream.combine(classes$, style$, sources.icon$)
       .map(([classes, style, icon]) => span(classes, { style }, [icon]));
   return {
     dom
