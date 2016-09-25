@@ -49,5 +49,8 @@ dist
 *.d.ts
 *.js
 *.js.map
-
 *.tgz
+
+# Nightwatch
+!tests/**/*.js
+reports

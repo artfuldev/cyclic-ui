@@ -1,18 +1,20 @@
 // Place your settings in this file to overwrite default and user settings.
 {
-    "files.exclude": {
-        "**/.git": true,
-        "**/.svn": true,
-        "**/.DS_Store": true,
-        "node_modules": true,
-        "**/*.d.ts": true,
-        "**/*.js": true,
-        "**/*.js.map": true,
-        ".vscode/*BROWSE*": true,
-        "typings": true,
-        "components": true,
-        "styles": true,
-        "utils": true,
-        "*.tgz": true
-    }
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.DS_Store": true,
+    "node_modules": true,
+    "**/*.d.ts": true,
+    "index.js": true,
+    "index.js.map": true,
+    ".vscode/*BROWSE*": true,
+    "typings": true,
+    "components": true,
+    "styles": true,
+    "utils": true,
+    "*.tgz": true,
+    "reports": true,
+    "bin": true
+  }
 }
