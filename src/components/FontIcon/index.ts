@@ -24,7 +24,7 @@ function FontIconComponent(sources: FontIconSources): FontIconSinks {
     xs.merge(
       sources.dom
         .select('span')
-        .events('mouseenter')
+        .events('mouseleave')
         .mapTo(false),
       sources.dom
         .select('span')
