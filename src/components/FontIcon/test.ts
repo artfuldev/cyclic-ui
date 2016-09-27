@@ -7,7 +7,8 @@ import xs from 'xstream';
 const noop = () => {};
 
 describe('FontIcon', function () {
-  it('is rendered as span element', function () {
+  
+  it('should render as a SPAN', function () {
     const fontIcon = FontIcon({
       dom: mockDOMSource(xsAdapter, {}),
       color$: xs.of('pink'),
@@ -21,7 +22,12 @@ describe('FontIcon', function () {
       });
   });
 
+  it('should render default class of .material-icons');
+  it('should render class that is passed in');
+  it('should render the icon that is passed in');
+  
   it('has a test that passes', function () {
     expect(true).to.equal(true);
   });
+
 });
