@@ -50,4 +50,5 @@ describe('FontIcon', () => {
       });
   });
   it('should render the icon that is passed in');
+  it('should render the color that is passed in');
 });
