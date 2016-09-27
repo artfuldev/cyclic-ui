@@ -17,13 +17,22 @@ describe('FontIcon', () => {
     dom$.addListener({
         complete: done,
         error: err => done(err),
-        next: vdom => {
-          const tagName = vdom.sel.split('.')[0];
-          expect(tagName).to.equal('span');
-        }
+        next: vdom => expect(vdom.sel).to.have.string('span')
       });
   });
-  it('should render default class of .material-icons');
+  it('should render default class of .material-icons', done => {
+    const fontIcon = FontIcon({
+      dom: mockDOMSource(xsAdapter, {}),
+      color$: xs.of('pink'),
+      icon$: xs.of('save')
+    });
+    const dom$ = fontIcon.dom.take(1);
+    dom$.addListener({
+        complete: done,
+        error: err => done(err),
+        next: vdom => expect(vdom.sel).to.have.string('.material-icons')
+      });
+  });
   it('should render class that is passed in');
   it('should render the icon that is passed in');
 });
