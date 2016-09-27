@@ -34,6 +34,7 @@
     "xstream": "^5.3.6"
   },
   "devDependencies": {
+    "@cycle/xstream-adapter": "^3.0.3",
     "chai": "^3.5.0",
     "mocha": "^3.1.0",
     "nightwatch": "^0.9.8",
