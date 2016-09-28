@@ -11,13 +11,13 @@ describe('Themeify', () => {
     expect(newStyle.color).to.equal('pink');
   });
   it('should not change style if theme has no matching keys', () => {
-    const style = { 'color': 'palette.textColor' } as Style;
+    const style = { 'color': 'textColor' } as Style;
     const theme = {} as Theme;
     const newStyle = themeify(style, theme);
-    expect(newStyle.color).to.equal('palette.textColor');
+    expect(newStyle.color).to.equal('textColor');
   });
   it('should change style if theme has matching keys', () => {
-    const style = { 'color': 'palette.textColor' } as Style;
+    const style = { 'color': 'textColor' } as Style;
     const theme = { palette: { textColor: 'pink' } } as Theme;
     const newStyle = themeify(style, theme);
     expect(newStyle.color).to.equal('pink');
