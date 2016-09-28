@@ -47,6 +47,19 @@ describe('FontIcon', () => {
           && expect(vdom.sel).to.have.string('.fa.fa-icon')
       });
   });
-  it('should render the icon that is passed in');
+  it('should render the icon that is passed in', done => {
+    const icon = 'save';
+    const fontIcon = FontIcon({
+      dom: mockDOMSource(xsAdapter, {}),
+      color$: xs.of('pink'),
+      icon$: xs.of(icon)
+    });
+    const dom$ = fontIcon.dom.take(1);
+    dom$.addListener({
+        complete: done,
+        error: err => done(err),
+        next: vdom => expect(vdom.children[0]['text']).to.equal(icon)
+      });
+  });
   it('should render the color that is passed in');
 });
