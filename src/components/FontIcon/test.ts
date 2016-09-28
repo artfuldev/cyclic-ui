@@ -4,8 +4,6 @@ import { mockDOMSource } from '@cycle/dom';
 import xsAdapter from '@cycle/xstream-adapter';
 import xs from 'xstream';
 
-const noop = () => {};
-
 describe('FontIcon', () => {
   it('should render as a SPAN', done => {
     const fontIcon = FontIcon({
