@@ -1,4 +1,5 @@
 import themeify from './themeify';
+import { merge } from './extend';
 import { Style } from '../styles';
 import { Theme } from '../styles/themes';
 import { expect } from 'chai';
@@ -22,4 +23,16 @@ describe('Themeify', () => {
     const newStyle = themeify(style, theme);
     expect(newStyle.color).to.equal('pink');
   });
+});
+
+describe('Merge', () => {
+  it('should add properties when not present in target', () => {
+    const target = {} as Style;
+    const source = { color: 'textColor', background: 'white' } as Style;
+    const result = merge(target, source);
+    expect(result.color).to.exist;
+    expect(result.color).to.equal('textColor');
+    expect(result.background).to.exist;
+    expect(result.background).to.equal('white');
+  })
 });
