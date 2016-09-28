@@ -5,25 +5,25 @@ import { Theme } from '../styles/themes';
 import { expect } from 'chai';
 
 describe('themeify(style: Style, theme: Theme): Style', () => {
-  it('should not change style if style has no matching keys', () => {
+  it('should not apply theme if style has no matching keys', () => {
     const style = { 'color': 'pink' } as Style;
     const theme = { palette: { textColor: 'black' } } as Theme;
     const newStyle = themeify(style, theme);
     expect(newStyle.color).to.equal('pink');
   });
-  it('should not change style if theme has no matching keys', () => {
+  it('should not apply theme if theme has no matching keys', () => {
     const style = { 'color': 'textColor' } as Style;
     const theme = {} as Theme;
     const newStyle = themeify(style, theme);
     expect(newStyle.color).to.equal('textColor');
   });
-  it('should change style if theme has matching keys', () => {
+  it('should apply theme if theme has matching keys', () => {
     const style = { 'color': 'textColor' } as Style;
     const theme = { palette: { textColor: 'pink' } } as Theme;
     const newStyle = themeify(style, theme);
     expect(newStyle.color).to.equal('pink');
   });
-  it('should not change original style even if theme has matching keys', () => {
+  it('should not mutate style', () => {
     const style = { 'color': 'textColor' } as Style;
     const theme = { palette: { textColor: 'pink' } } as Theme;
     const newStyle = themeify(style, theme);
