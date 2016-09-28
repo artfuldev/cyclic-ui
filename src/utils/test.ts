@@ -4,7 +4,7 @@ import { Style } from '../styles';
 import { Theme } from '../styles/themes';
 import { expect } from 'chai';
 
-describe('Themeify', () => {
+describe('themeify(style: Style, theme: Theme): Style', () => {
   it('should not change style if style has no matching keys', () => {
     const style = { 'color': 'pink' } as Style;
     const theme = { palette: { textColor: 'black' } } as Theme;
@@ -31,7 +31,7 @@ describe('Themeify', () => {
   });
 });
 
-describe('Merge', () => {
+describe('merge<T>(target: T, ...sources: T[]): T', () => {
   it('should add properties when not present in target', () => {
     const target = {} as Style;
     const source = { color: 'textColor', background: 'white' } as Style;
