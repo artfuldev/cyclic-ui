@@ -23,6 +23,12 @@ describe('Themeify', () => {
     const newStyle = themeify(style, theme);
     expect(newStyle.color).to.equal('pink');
   });
+  it('should not change original style even if theme has matching keys', () => {
+    const style = { 'color': 'textColor' } as Style;
+    const theme = { palette: { textColor: 'pink' } } as Theme;
+    const newStyle = themeify(style, theme);
+    expect(style.color).to.equal('textColor');
+  });
 });
 
 describe('Merge', () => {
