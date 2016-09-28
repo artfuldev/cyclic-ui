@@ -40,5 +40,11 @@ describe('Merge', () => {
     expect(result.color).to.equal('textColor');
     expect(result.background).to.exist;
     expect(result.background).to.equal('white');
-  })
+  });
+  it('should overwrite properties when present in target', () => {
+    const target = { color: 'textColor' } as Style;
+    const source = { color: 'pink', background: 'white' } as Style;
+    const result = merge(target, source);
+    expect(result.color).to.equal('pink');
+  });
 });
