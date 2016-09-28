@@ -47,4 +47,16 @@ describe('merge<T>(target: T, ...sources: T[]): T', () => {
     const result = merge(target, source);
     expect(result.color).to.equal('pink');
   });
+  it('should not mutate target', () => {
+    const target = { color: 'textColor' } as Style;
+    const source = { color: 'pink', background: 'white' } as Style;
+    const result = merge(target, source);
+    expect(target.color).to.equal('textColor');
+  });
+  it('should not mutate source', () => {
+    const target = { color: 'textColor' } as Style;
+    const source = { color: 'pink', background: 'white' } as Style;
+    const result = merge(target, source);
+    expect(source.color).to.equal('pink');
+  });
 });
