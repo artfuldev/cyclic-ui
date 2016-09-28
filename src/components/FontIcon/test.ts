@@ -61,5 +61,18 @@ describe('FontIcon', () => {
         next: vdom => expect(vdom.children[0]['text']).to.equal(icon)
       });
   });
-  it('should render the color that is passed in');
+  it('should render the color that is passed in', done => {
+    const color = 'red';
+    const fontIcon = FontIcon({
+      dom: mockDOMSource(xsAdapter, {}),
+      color$: xs.of(color),
+      icon$: xs.of('save')
+    });
+    const dom$ = fontIcon.dom.take(1);
+    dom$.addListener({
+        complete: done,
+        error: err => done(err),
+        next: vdom => expect(vdom.data.style['color']).to.equal(color)
+      });
+  });
 });
