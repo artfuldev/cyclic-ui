@@ -28,7 +28,7 @@ describe('SvgIcon', () => {
     dom$.addListener({
         complete: done,
         error: err => done(err),
-        next: vdom => expect(vdom.sel).to.have.string('svg.__cycle')
+        next: vdom => expect(vdom.sel).to.have.string('svg.___cycle')
       });
   });
 });
