@@ -26,7 +26,7 @@ const svgIconStyle: Style = {
   transition: 'all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms',
   marginRight: '24px'
 };
-const svgIconClasses = '.material-icons';
+const svgIconClasses = '';
 const viewBox = '0 0 24 24';
 
 function SvgIconComponent(sources: SvgIconSources): SvgIconSinks {
@@ -72,7 +72,10 @@ function SvgIconComponent(sources: SvgIconSources): SvgIconSinks {
     take(sources.classes$, xs.of(svgIconClasses));
   const dom =
     xs.combine(classes$, style$, sources.children$, viewBox$)
-      .map(([classes, style, children, viewBox]) => svg(classes, { style, props: { viewBox } }, children));
+      .map(([classes, style, children, viewBox]) =>
+        classes
+          ? svg(classes, { style, props: { viewBox } }, children)
+          : svg({ style, props: { viewBox } }, children));
   return {
     dom
   };
