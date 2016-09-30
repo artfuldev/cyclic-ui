@@ -18,4 +18,17 @@ describe('SvgIcon', () => {
         next: vdom => expect(vdom.sel).to.have.string('svg')
       });
   });
+  it('should render with no default class', done => {
+    const svgIcon = SvgIcon({
+      dom: mockDOMSource(xsAdapter, {}),
+      color$: xs.of('pink'),
+      children$: xs.of([h('path')])
+    });
+    const dom$ = svgIcon.dom.take(1);
+    dom$.addListener({
+        complete: done,
+        error: err => done(err),
+        next: vdom => expect(vdom.sel).to.have.string('svg.__cycle')
+      });
+  });
 });
