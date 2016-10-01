@@ -47,4 +47,18 @@ describe('SvgIcon', () => {
           && expect(vdom.sel).to.have.string('.fa.fa-icon')
       });
   });
+  it('should render in the color that is passed in', done => {
+    const color = 'red';
+    const svgIcon = SvgIcon({
+      dom: mockDOMSource(xsAdapter, {}),
+      color$: xs.of(color),
+      children$: xs.of([h('path')])
+    });
+    const dom$ = svgIcon.dom.take(1);
+    dom$.addListener({
+        complete: done,
+        error: err => done(err),
+        next: vdom => expect(vdom.data.style['color']).to.equal(color)
+      });
+  });
 });
