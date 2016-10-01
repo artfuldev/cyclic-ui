@@ -61,4 +61,17 @@ describe('SvgIcon', () => {
         next: vdom => expect(vdom.data.style['color']).to.equal(color)
       });
   });
+  it('should render the children that are passed in', done => {
+    const svgIcon = SvgIcon({
+      dom: mockDOMSource(xsAdapter, {}),
+      color$: xs.of('pink'),
+      children$: xs.of([h('path')])
+    });
+    const dom$ = svgIcon.dom.take(1);
+    dom$.addListener({
+        complete: done,
+        error: err => done(err),
+        next: vdom => expect(vdom.children[0]['sel']).to.equal('path')
+      });
+  });
 });
