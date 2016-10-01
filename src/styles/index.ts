@@ -159,6 +159,8 @@ export interface Style {
   display?: string;
   // Sets or returns whether to show the border and background of empty cells, or not
   emptyCells?: string;
+  // Sets or returns the fill of an SVG element
+  fill?: string;
   // Sets or returns image filters (visual effects, like blur and saturation)
   filter?: string;
   // Sets or returns the length of the item, relative to the rest

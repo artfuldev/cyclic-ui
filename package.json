@@ -6,7 +6,8 @@
   "typings": "index.d.ts",
   "scripts": {
     "build": "tsc",
-    "test": "mocha -r ts-node/register src/**/test.ts"
+    "test": "mocha -r ts-node/register src/**/test.ts",
+    "postinstall": "typings install"
   },
   "repository": {
     "type": "git",
