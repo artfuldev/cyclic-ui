@@ -75,7 +75,8 @@ describe('FontIcon', () => {
         error: err => done(err),
         next: vdom => expect(vdom.data.style['color']).to.equal(color)
       });
-  });it('should be rendered in normal color on hover if no hover color is provided', done => {
+  });
+  it('should be rendered in normal color on hover if no hover color is provided', done => {
     const color = 'red';
     const hoverColor = 'pink';
     const fontIcon = FontIcon({
