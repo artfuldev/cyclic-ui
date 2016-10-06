@@ -3,6 +3,7 @@ import { expect } from 'chai';
 import { mockDOMSource, h } from '@cycle/dom';
 import xsAdapter from '@cycle/xstream-adapter';
 import xs from 'xstream';
+import delay from 'xstream/extra/delay';
 
 describe('SvgIcon', () => {
   it('should render as a SVG', done => {
@@ -72,6 +73,68 @@ describe('SvgIcon', () => {
         complete: done,
         error: err => done(err),
         next: vdom => expect(vdom.children[0]['sel']).to.equal('path')
+      });
+  });
+  it('should be rendered in normal color on hover if no hover color is provided', done => {
+    const color = 'red';
+    const hoverColor = 'pink';
+    const svgIcon = SvgIcon({
+      dom: mockDOMSource(xsAdapter, {
+        'span': {
+          'mouseenter': xs.of(null).compose(delay(100)),
+          'mouseleave': xs.of(null).compose(delay(200))
+        }
+      }),
+      color$: xs.of(color),
+      children$: xs.of([h('path')])
+    });
+    const dom$ = svgIcon.dom.drop(1).take(1);
+    dom$.addListener({
+        complete: done,
+        error: err => done(err),
+        next: vdom => expect(vdom.data.style['color']).to.equal(color)
+      });
+  });
+  it('should be rendered in hover color on hover if hover color is provided', done => {
+    const color = 'red';
+    const hoverColor = 'pink';
+    const svgIcon = SvgIcon({
+      dom: mockDOMSource(xsAdapter, {
+        'span': {
+          'mouseenter': xs.of(null).compose(delay(100)),
+          'mouseleave': xs.of(null).compose(delay(200))
+        }
+      }),
+      color$: xs.of(color),
+      hoverColor$: xs.of(hoverColor),
+      children$: xs.of([h('path')])
+    });
+    const dom$ = svgIcon.dom.drop(1).take(1);
+    dom$.addListener({
+        complete: done,
+        error: err => done(err),
+        next: vdom => expect(vdom.data.style['color']).to.equal(hoverColor)
+      });
+  });
+  it('should be rendered in normal color on hover end even if hover color is provided', done => {
+    const color = 'red';
+    const hoverColor = 'pink';
+    const svgIcon = SvgIcon({
+      dom: mockDOMSource(xsAdapter, {
+        'span': {
+          'mouseenter': xs.of(null).compose(delay(100)),
+          'mouseleave': xs.of(null).compose(delay(200))
+        }
+      }),
+      color$: xs.of(color),
+      children$: xs.of([h('path')]),
+      hoverColor$: xs.of(hoverColor)
+    });
+    const dom$ = svgIcon.dom.drop(2).take(1);
+    dom$.addListener({
+        complete: done,
+        error: err => done(err),
+        next: vdom => expect(vdom.data.style['color']).to.equal(color)
       });
   });
 });
