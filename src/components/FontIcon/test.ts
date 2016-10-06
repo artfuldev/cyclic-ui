@@ -3,6 +3,7 @@ import { expect } from 'chai';
 import { mockDOMSource } from '@cycle/dom';
 import xsAdapter from '@cycle/xstream-adapter';
 import xs from 'xstream';
+import delay from 'xstream/extra/delay';
 
 describe('FontIcon', () => {
   it('should render as a SPAN', done => {
@@ -69,6 +70,67 @@ describe('FontIcon', () => {
       icon$: xs.of('save')
     });
     const dom$ = fontIcon.dom.take(1);
+    dom$.addListener({
+        complete: done,
+        error: err => done(err),
+        next: vdom => expect(vdom.data.style['color']).to.equal(color)
+      });
+  });it('should be rendered in normal color on hover if no hover color is provided', done => {
+    const color = 'red';
+    const hoverColor = 'pink';
+    const fontIcon = FontIcon({
+      dom: mockDOMSource(xsAdapter, {
+        'span': {
+          'mouseenter': xs.of(null).compose(delay(100)),
+          'mouseleave': xs.of(null).compose(delay(200))
+        }
+      }),
+      color$: xs.of(color),
+      icon$: xs.of('save')
+    });
+    const dom$ = fontIcon.dom.drop(1).take(1);
+    dom$.addListener({
+        complete: done,
+        error: err => done(err),
+        next: vdom => expect(vdom.data.style['color']).to.equal(color)
+      });
+  });
+  it('should be rendered in hover color on hover if hover color is provided', done => {
+    const color = 'red';
+    const hoverColor = 'pink';
+    const fontIcon = FontIcon({
+      dom: mockDOMSource(xsAdapter, {
+        'span': {
+          'mouseenter': xs.of(null).compose(delay(100)),
+          'mouseleave': xs.of(null).compose(delay(200))
+        }
+      }),
+      color$: xs.of(color),
+      icon$: xs.of('save'),
+      hoverColor$: xs.of(hoverColor)
+    });
+    const dom$ = fontIcon.dom.drop(1).take(1);
+    dom$.addListener({
+        complete: done,
+        error: err => done(err),
+        next: vdom => expect(vdom.data.style['color']).to.equal(hoverColor)
+      });
+  });
+  it('should be rendered in normal color on hover end even if hover color is provided', done => {
+    const color = 'red';
+    const hoverColor = 'pink';
+    const fontIcon = FontIcon({
+      dom: mockDOMSource(xsAdapter, {
+        'span': {
+          'mouseenter': xs.of(null).compose(delay(100)),
+          'mouseleave': xs.of(null).compose(delay(200))
+        }
+      }),
+      color$: xs.of(color),
+      icon$: xs.of('save'),
+      hoverColor$: xs.of(hoverColor)
+    });
+    const dom$ = fontIcon.dom.drop(2).take(1);
     dom$.addListener({
         complete: done,
         error: err => done(err),
