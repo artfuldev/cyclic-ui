@@ -4,6 +4,7 @@ import { mockDOMSource } from '@cycle/dom';
 import xsAdapter from '@cycle/xstream-adapter';
 import xs from 'xstream';
 import delay from 'xstream/extra/delay';
+import 'mocha';
 
 describe('FontIcon', () => {
   it('should render as a SPAN', done => {
