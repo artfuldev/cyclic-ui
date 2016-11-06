@@ -17,4 +17,6 @@
     "reports": true,
     "bin": true
   }
+,
+"typescript.tsdk": "./node_modules/typescript/lib"
 }
