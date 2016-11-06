@@ -8,7 +8,7 @@ export interface AvatarSources extends UIComponentSources {
   backgroundColor$?: Stream<string>;
   children$?: Stream<VNode | string>;
   color$?: Stream<string>;
-  icon$?: Stream<SvgIconSinks | FontIconSinks>;
+  icon?: SvgIconSinks | FontIconSinks;
   size$?: Stream<number>;
   src$?: Stream<string>;
 }
