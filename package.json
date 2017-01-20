@@ -37,12 +37,12 @@
   "devDependencies": {
     "@cycle/xstream-adapter": "^3.0.3",
     "@types/chai": "^3.4.34",
+    "@types/es6-shim": "^0.31.32",
     "@types/mocha": "^2.2.32",
     "chai": "^3.5.0",
     "mocha": "^3.1.0",
     "nightwatch": "^0.9.8",
     "ts-node": "^1.3.0",
-    "typescript": "^2.0.3",
-    "typings": "^1.3.1"
+    "typescript": "^2.0.7"
   }
 }
