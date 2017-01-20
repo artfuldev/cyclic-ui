@@ -50,6 +50,7 @@ dist
 *.js
 *.js.map
 *.tgz
+!webpack.config.js
 
 # Nightwatch
 !tests/**/*.js
