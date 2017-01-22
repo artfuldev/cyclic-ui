@@ -3,7 +3,7 @@ import xs, { Stream } from 'xstream';
 import { DOMSource } from '@cycle/dom/xstream-typings';
 import { VNode, button } from '@cycle/dom';
 import isolate from '@cycle/isolate';
-import { merge, take } from '../../utils/extend';
+import { merge, defaultTo } from '../../utils/extend';
 import { themeify } from '../../utils/themeify';
 import { Style } from '../../styles';
 import { Theme, defaultTheme } from '../../styles/themes';
@@ -25,14 +25,14 @@ function ButtonComponent(sources: ButtonSources): ButtonSinks {
       .select('button')
       .events('click')
       .map(event => event as MouseEvent);
-  const theme$ = take(sources.theme$, xs.of(defaultTheme));
+  const theme$ = defaultTo(sources.theme$, xs.of(defaultTheme));
   const style$ =
     theme$.map(theme =>
-      take(sources.style$, xs.of(buttonStyle))
+      defaultTo(sources.style$, xs.of(buttonStyle))
           .map(style => merge(buttonStyle, style))
           .map(style => themeify(style, theme))
     ).flatten();
-  const classes$ = take(sources.classes$, xs.of(buttonClasses));
+  const classes$ = defaultTo(sources.classes$, xs.of(buttonClasses));
   const dom =
     xs.combine(classes$, style$, sources.content$)
       .map(([classes, style, content]) => button(classes, { style }, content));

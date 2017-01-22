@@ -19,7 +19,7 @@ export function merge<T>(target: T, ...sources: T[]): T {
   return shallowExtendNew(target, ...sources) as T;
 }
 
-export function take<T>(main$: Stream<T>, default$: Stream<T>): Stream<T> {
+export function defaultTo<T>(main$: Stream<T>, default$: Stream<T>): Stream<T> {
   return main$ == undefined
       ? default$
       : main$;

@@ -3,7 +3,7 @@ import xs, { Stream } from 'xstream';
 import { DOMSource } from '@cycle/dom/xstream-typings';
 import { VNode, svg } from '@cycle/dom';
 import isolate from '@cycle/isolate';
-import { merge, take } from '../../utils/extend';
+import { merge, defaultTo } from '../../utils/extend';
 import { themeify } from '../../utils/themeify';
 import { Style } from '../../styles';
 import { Theme, defaultTheme } from '../../styles/themes';
@@ -42,14 +42,14 @@ function SvgIconComponent(sources: SvgIconSources): SvgIconSinks {
         .mapTo(true)
     ).startWith(false);
   const theme$ =
-    take(sources.theme$, xs.of(defaultTheme))
+    defaultTo(sources.theme$, xs.of(defaultTheme))
     .remember();
   const color$ =
     theme$.map(theme =>
-      take(sources.color$, xs.of(theme.palette.textColor))
+      defaultTo(sources.color$, xs.of(theme.palette.textColor))
     ).flatten();
   const hoverColor$ =
-    take(sources.hoverColor$, color$);
+    defaultTo(sources.hoverColor$, color$);
   const colorStyle$ =
     hover$.map(hover =>
       hover
@@ -58,18 +58,18 @@ function SvgIconComponent(sources: SvgIconSources): SvgIconSinks {
     ).flatten()
     .map<Style>(color => ({ color }));
   const viewBox$ =
-    take(sources.viewBox$, xs.of(viewBox));
+    defaultTo(sources.viewBox$, xs.of(viewBox));
   const style$ =
     colorStyle$.map(colorStyle =>
       theme$.map(theme =>
-        take(sources.style$, xs.of(svgIconStyle)
+        defaultTo(sources.style$, xs.of(svgIconStyle)
           .map(style => merge(svgIconStyle, style))
         ).map(style => themeify(style, theme))
       ).flatten()
       .map(style => merge(style, colorStyle))
     ).flatten();
   const classes$ =
-    take(sources.classes$, xs.of(svgIconClasses));
+    defaultTo(sources.classes$, xs.of(svgIconClasses));
   const dom =
     xs.combine(classes$, style$, sources.children$, viewBox$)
       .map(([classes, style, children, viewBox]) =>
