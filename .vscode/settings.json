@@ -15,7 +15,9 @@
     "utils": true,
     "*.tgz": true,
     "reports": true,
-    "bin": true
+    "bin": true,
+    "**/*.js": {"when": "$(basename).ts"},
+    "**/*.js.map": true
   }
 ,
 "typescript.tsdk": "./node_modules/typescript/lib"
