@@ -36,6 +36,7 @@
   },
   "devDependencies": {
     "@cycle/xstream-adapter": "^3.0.3",
+    "@cycle/xstream-run": "^4.2.0",
     "@types/chai": "^3.4.34",
     "@types/es6-shim": "^0.31.32",
     "@types/mocha": "^2.2.32",
