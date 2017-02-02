@@ -12,7 +12,7 @@ function main(source: Source) {
     dom: source.dom,
     content$: xs.of('Stop')
   });
-  const restOfDom$ = xs.periodic(1000).map(i => h1('' + i + ' seconds elapsed'));
+  const restOfDom$ = xs.periodic(1000).map(i => h1(i + ' seconds elapsed'));
   const vtree$ = xs.combine(button.dom, restOfDom$).map(div);
   button.click$.map(x => console.log('clicked'));
   return { dom: vtree$ };
