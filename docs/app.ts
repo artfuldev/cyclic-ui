@@ -1,20 +1,21 @@
 import xs from 'xstream';
 import { run } from '@cycle/xstream-run';
 import { makeDOMDriver, DOMSource, h1, div } from '@cycle/dom';
-import { Button } from '../src/components/Button';
+import { FontIcon } from '../src/components/FontIcon';
 
 interface Source {
   dom: DOMSource
 }
 
 function main(source: Source) {
-  const button = Button({
+  const fontIcon = FontIcon({
     dom: source.dom,
-    content$: xs.of('Stop')
+    classes$: xs.of('fa fa-heart'),
+    color$: xs.of('red'),
+    icon$: xs.of('')
   });
   const restOfDom$ = xs.periodic(1000).map(i => h1(i + ' seconds elapsed'));
-  const vtree$ = xs.combine(button.dom, restOfDom$).map(div);
-  button.click$.map(x => console.log('clicked'));
+  const vtree$ = xs.combine(fontIcon.dom, restOfDom$).map(div);
   return { dom: vtree$ };
 }
 
