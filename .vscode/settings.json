@@ -6,17 +6,9 @@
     "**/.DS_Store": true,
     "node_modules": true,
     "**/*.d.ts": true,
-    "index.js": true,
-    "index.js.map": true,
     ".vscode/*BROWSE*": true,
-    "typings": true,
-    "components": true,
-    "styles": true,
-    "utils": true,
-    "*.tgz": true,
-    "reports": true,
+    "dist": true,
     "bin": true
-  }
-,
-"typescript.tsdk": "./node_modules/typescript/lib"
+  },
+  "typescript.tsdk": "./node_modules/typescript/lib"
 }
