@@ -21,12 +21,12 @@
     "keyup",
     "cycle"
   ],
-  "author": "Sudarsan Balaji",
+  "author": "Sudarsan Balaji<Sudarsan.Balaji@outlook.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/artfuldev/cyclic-ui/issues"
+    "url": "https://github.com/cyclic-ui/cyclic-ui/issues"
   },
-  "homepage": "https://github.com/artfuldev/cyclic-ui",
+  "homepage": "https://github.com/cyclic-ui/cyclic-ui",
   "dependencies": {
     "@cycle/dom": "^18.3.0",
     "@cycle/isolate": "^3.2.0",
